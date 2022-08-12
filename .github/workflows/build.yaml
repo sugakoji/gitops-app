@@ -7,7 +7,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - run: echo $(git rev-parse --short "$GITHUB_SHA") >> $COMMIT_HASH
+      - run: echo $(git rev-parse --short "$GITHUB_SHA")
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up QEMU
