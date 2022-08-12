@@ -7,9 +7,6 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Set outputs
-        id: vars
-        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -26,4 +23,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: docdocsugasuga/gitops-go:${{ steps.vars.outputs.sha_short }}
+          tags: docdocsugasuga/gitops-go:${{ github.sha }}
