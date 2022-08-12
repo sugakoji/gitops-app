@@ -7,6 +7,7 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - run: echo $(git rev-parse --short "$GITHUB_SHA") >> $COMMIT_HASH
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set up QEMU
@@ -23,4 +24,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: docdocsugasuga/gitops-go:latest
+          tags: docdocsugasuga/gitops-go:${{ env.COMMIT_HASH }}
