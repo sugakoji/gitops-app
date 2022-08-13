@@ -31,7 +31,7 @@ jobs:
             git commit -m "サンプル" --allow-empty
           fi
       - name: Pushes to another repository
-        uses: sugakoji/gitops-manifest
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           SSH_DEPLOY_KEY: ${{ secrets.GITHUB_IO_REPO_DEPLOY_KEY }}
         with:
