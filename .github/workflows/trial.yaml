@@ -31,6 +31,7 @@ jobs:
           cd gitops-manifest
           echo $(ls)
           touch text.txt
+          git add .
           if ! git diff --cached --quiet; then
             origin=https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/sugakoji/gitops-manifest.git
             git commit -m "サンプル" --allow-empty
