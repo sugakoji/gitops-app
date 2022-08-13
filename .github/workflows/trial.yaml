@@ -13,7 +13,6 @@ jobs:
 
       - name: Create MR for Manifest Repository
         env:
-          GITHUB_IO_REPO_DEPLOY_KEY: ${{ secrets.GITHUB_IO_REPO_DEPLOY_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git clone https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/sugakoji/gitops-manifest
@@ -30,8 +29,14 @@ jobs:
           if ! git diff --cached --quiet; then
             origin=https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/sugakoji/gitops-manifest.git
             git commit -m "サンプル" --allow-empty
-            fi
-      - name: Push changes
-        uses: ad-m/github-push-action@master
+          fi
+      - name: Pushes to another repository
+        uses: sugakoji/gitops-manifest
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.GITHUB_IO_REPO_DEPLOY_KEY }}
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source-directory: "gitops-manifest"
+          destination-github-username: "github-actions[bot]"
+          destination-repository-name: "gitops-manifest"
+          user-email: github-actions[bot]@users.noreply.github.com
+          target-branch: development
