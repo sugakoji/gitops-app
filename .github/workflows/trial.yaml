@@ -15,8 +15,8 @@ jobs:
           repository: sugakoji/gitops-manifest
           path: gitops-manifest
 
+      - uses: actions/checkout@v3
       - name: push to other repo
-        uses: actions/checkout@v3
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
