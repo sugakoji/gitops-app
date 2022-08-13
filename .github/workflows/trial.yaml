@@ -8,16 +8,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout other repo
         uses: actions/checkout@v2
         with:
           repository: sugakoji/gitops-manifest
           path: gitops-manifest
 
-      - uses: actions/checkout@v3
-      - run: |
+      - name: Checkout other repo
+        uses: actions/checkout@v3
+        run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -m "generated" --allow-empty
