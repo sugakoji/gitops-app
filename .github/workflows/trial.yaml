@@ -6,23 +6,12 @@ on:
 
 jobs:
   build:
-    permissions:
-      actions: write
-      checks: write
-      contents: write
-      deployments: write
-      issues: write
-      packages: write
-      pull-requests: write
-      repository-projects: write
-      security-events: write
-      statuses: write
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Update dependency of submodule
+      - name: Create MR for Manifest Repository
         env:
           GITHUB_IO_REPO_DEPLOY_KEY: ${{ secrets.GITHUB_IO_REPO_DEPLOY_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,5 +30,8 @@ jobs:
           if ! git diff --cached --quiet; then
             origin=https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/sugakoji/gitops-manifest.git
             git commit -m "サンプル" --allow-empty
-            git push $origin development
-          fi
+            fi
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
