@@ -14,8 +14,8 @@ jobs:
         with:
           repository: sugakoji/gitops-manifest
           path: gitops-manifest
-        run: |
-          echo $PWD
+          run: |
+            echo $PWD
 
       - uses: actions/checkout@v3
       - name: push to other repo
