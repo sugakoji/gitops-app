@@ -5,37 +5,20 @@ on:
     branches: practice
 
 jobs:
-  build-and-deploy:
-    name: Build static pages and deploy
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+        # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Checkout other repo
         uses: actions/checkout@v2
-      - name: Checkout submodules
-        run: |
-          auth_header="$(git config --local --get http.https://github.com/.extraheader)"
-          git submodule sync --recursive
-          git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+        with:
+          repository: sugakoji/gitops-manifest
+          path: gitops-manifest
 
-      - name: Setup git repogitories
-        env:
-          MANIFEST_REPO_PUSH_KEY: ${{ secrets.MANIFEST_REPO_PUSH_KEY }}
-        run: |
-          echo "$MANIFEST_REPO_PUSH_KEY" > ~/deploy_key.pem
-          chmod 600 ~/deploy_key.pem
-          git config --global user.email "sugakoji@github.io"
-          git config --global user.name "sugakoji"
-          git config remote.origin.url "git@github.com:sugakoji/gitops-manifest.git"
-          git checkout development
-
-      - name: push to development branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if ! git diff --cached --quiet; then
-            origin=https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/3nan3/blog.git
-            git commit -m "update docker image tag" --allow-empty
-            git pull $origin development
-            git push $origin development
-          fi
-
+      - uses: actions/checkout@v3
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -m "generated" --allow-empty
+          git push
