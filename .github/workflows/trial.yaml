@@ -9,18 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout other repo
-        uses: actions/checkout@master
-        with:
-          repository: sugakoji/gitops-manifest
-          path: gitops-manifest
-          run: |
-            echo $PWD
-
-      - uses: actions/checkout@v3
-      - name: push to other repo
-
+      - uses: actions/checkout@v1
+      - name: Clone other Repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          git clone https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/sugakoji/gitops-manifest
           echo $PWD
           echo $(ls)
           echo $PWD
