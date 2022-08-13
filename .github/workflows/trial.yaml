@@ -20,6 +20,7 @@ jobs:
 
         run: |
           echo $PWD
+          echo $(ls)
           cd gitops-manifest
           echo $PWD
           git config user.name github-actions
