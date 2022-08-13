@@ -22,6 +22,10 @@ jobs:
           cd gitops-manifest
           git config remote.origin.url "git@github.com:sugakoji/gitops-manifest.git"
           git checkout development
+          origin=https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/sugakoji/gitops-manifest.git
+          git commit -m "サンプル" --allow-empty
+          git pull $origin development
+          git push $origin development
 
       - name: Update dependency of submodule
         env:
