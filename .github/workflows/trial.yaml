@@ -25,7 +25,6 @@ jobs:
           chmod 600 ~/deploy_key.pem
           git config --global user.email "sugakoji@github.io"
           git config --global user.name "sugakoji"
-          cd public
           git config remote.origin.url "git@github.com:sugakoji/gitops-manifest.git"
           git checkout development
 
