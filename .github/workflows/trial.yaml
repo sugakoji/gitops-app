@@ -19,8 +19,8 @@ jobs:
           git clone https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/sugakoji/gitops-manifest
           echo "$GITHUB_IO_REPO_DEPLOY_KEY" > ~/deploy_key.pem
           chmod 600 ~/deploy_key.pem
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name github-actions[bot]
+          git config --global user.email github-actions[bot]@users.noreply.github.com
           cd gitops-manifest
           git config remote.origin.url "git@github.com:sugakoji/gitops-manifest.git"
           git checkout development
